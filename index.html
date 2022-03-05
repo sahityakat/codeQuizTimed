@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+        <link rel="stylesheet" href="./Assets/css/style.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+        <title>Code Quiz</title>
+    </head>
+    <body>
+        <div class="container">
+            <section class="row">
+                <section class="topDiv col-2 p-3 align-items-start">
+                    <!--h3><a href="#scores">View Scores</a></h3-->
+                    <button type="button" class="btn btn-link">View Scores</button>
+                </section>
+                <section id="startSection" class="vh-100 startSection d-flex align-items-center col-8">
+                    <div>
+                        <h1 class="d-flex justify-content-center">Coding Quiz Challenge</h1>
+                        <p class="text-center">Try to answer the following code-related questions within the time limit. 
+                            Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
+                        <!--button type="button" id="btn">Start Quiz</button-->
+                        <button type="button" id="btn" class="btn btn-primary p-2 w-100 text-center">Start Quiz</button>
+                    </div>
+                </section>
+                <section id="quizSection" class="vh-100 quizSection d-flex align-items-center col-8">
+                    <div>
+                        <div id="question" class="d-flex justify-content-center"></div>
+                        <div id="options"></div>
+                    </div> 
+                </section>
+                <section class="row topDivTimer col-2 p-3">
+                    <h5> Timer: </h5>
+                    <p class="align-items-end">0</p>
+                    <!--button type="button" class="btn btn-link">View Scores</button-->
+                </section>
+            </section>
+        </div>
+        <div id="scores">
+        </div>
+       <script src="./Assets/js/script.js"></script>
+    </body>
+</html>
+
+

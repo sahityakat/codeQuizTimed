@@ -48,6 +48,7 @@ console.log('***startButton'+startButton);
 
 startButton.addEventListener("click", function(event) {
     document.getElementById("startSection").style.visibility = 'hidden';
+    document.getElementById("startSection").height = 0;
     console.log('***startButton'+startButton);
     showQuestion();
 })

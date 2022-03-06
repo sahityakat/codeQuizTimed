@@ -9,34 +9,52 @@
     </head>
     <body>
         <div class="container vh-100">
-            <section class="row h-100">
+            <section class="row h-25">
                 <section class="topDiv col-2 p-3 align-items-start">
-                    <!--h3><a href="#scores">View Scores</a></h3-->
-                    <button type="button" class="btn btn-link">View Scores</button>
+                    <button type="button" id="viewScores" class="btn btn-link"><a href="#scoresSection">View Scores</a></button>
                 </section>
-                <section id="startSection" class="startSection d-flex align-items-center col-8 my-6">
+                <section id="tempDiv" class="tempDiv d-flex align-items-center col-8 my-6">
+                    
+                </section>
+                <section class="row topDivTimer col-2 p-3">
+                    <h5> Timer: </h5> 
+                    <p class="align-items-end mx-2" id="timrVal"></p>
+                </section>
+            </section>
+            <section class="row h-50 m-6">
+                <section id="startSection" class="startSection align-items-center mx-6">
                     <div>
                         <h1 class="d-flex justify-content-center">Coding Quiz Challenge</h1>
                         <p class="text-center">Try to answer the following code-related questions within the time limit. 
                             Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-                        <!--button type="button" id="btn">Start Quiz</button-->
                         <button type="button" id="btn" class="btn btn-primary p-2 w-100 text-center">Start Quiz</button>
                     </div>
                 </section>
-                <section id="quizSection" class="quizSection d-flex align-items-center col-8">
-                    <div>
-                        <div id="question" class="d-flex justify-content-center"></div>
-                        <div id="options"></div>
+                <section id="quizSection" class="quizSection align-items-center mx-6 w-100">
+                    <div class="text-center">
+                        <div id="question"></div>
+                        <div id="options" class="m-2"></div>
+                        <hr>
+                        <div id="showAnswer"></div>
                     </div> 
                 </section>
-                <section class="row topDivTimer col-2 p-3">
-                    <h5> Timer: </h5>
-                    <p class="align-items-end">0</p>
-                    <!--button type="button" class="btn btn-link">View Scores</button-->
+                <section id="initialSection" class="initialSection align-items-center mx-6 w-100">
+                    <div class="text-center">
+                        <h2 class="d-flex justify-content-center">All done!</h2>
+                        <p class="text-center">Your final score is <span id="finalTimerVal"></span></p>
+                        <p>Enter initials <input type="text" id="initial" class="mx-1"> </p>
+                        <input class="btn btn-primary" type="submit" id="submitButton" value="Submit">
+                    </div> 
                 </section>
-            </section>
-        </div>
-        <div id="scores">
+                <section id="scoresSection" class="scoresSection align-items-center mx-6 w-100">
+                    <div class="text-center">
+                        <h2 class="d-flex justify-content-center">High Scores</h2>
+                        <div id="scores" class="m-2"></div>
+                        <input class="btn btn-primary" type="submit" id="goBackButton" value="Go Back">
+                        <input class="btn btn-primary" type="submit" id="clearScoresButton" value="Clear High Scores">
+                    </div>    
+                </section>
+            </section>                
         </div>
        <script src="./Assets/js/script.js"></script>
     </body>

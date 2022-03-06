@@ -1,19 +1,41 @@
 var container = document.querySelector(".container");
+var timerVal = 75;
+var timrVal = document.getElementById("timrVal");
+timrVal.textContent = timerVal; 
+var timeInterval;
 
 window.addEventListener('load', (event) => {
-    document.getElementById("quizSection").style.display = 'none';
-  }); 
+    document.getElementById("quizSection").classList.add("d-none");
+    document.getElementById("initialSection").classList.add("d-none"); 
+    document.getElementById("scoresSection").classList.add("d-none"); 
+     
+  });  
 
 var questions = [
     {
-        "title" : "Commonly used datatypes DO NOT include",
+        "title" : "Commonly used datatypes DO NOT include:",
         "options" : ["Strings","Booleans","Alerts","Numbers"],
         "answer" : "Alerts"
     },
     {
-        "title" : "Arrays in JavaScript can be used to store",
+        "title" : "Arrays in JavaScript can be used to store __________",
         "options" : ["Numbers and Strings","Other Arrays","Booleans","All of the above"],
         "answer" : "All of the above"
+    },
+    {
+        "title" : "The condition in an if / else statement is enclosed with _________",
+        "options" : ["Quotes","Curly Brackets","Parenthesis","Square Brackets"],
+        "answer" : "Curly Brackets"
+    },
+    {
+        "title" : "String values must be enclosed within ________ when being assigned to variables",
+        "options" : ["Commas","Curly Brackets","Parenthesis","Quotes"],
+        "answer" : "Quotes"
+    },
+    {
+        "title" : "A very useful tool used during development and debugging for printing content to the debugger is:",
+        "options" : ["Javascript","Terminal/Bash","For Loops","console.log"],
+        "answer" : "console.log"
     },
 ];
 
@@ -47,20 +69,59 @@ var startButton = document.querySelector("#btn");
 console.log('***startButton'+startButton);
 
 startButton.addEventListener("click", function(event) {
-    document.getElementById("startSection").style.visibility = 'hidden';
-    document.getElementById("startSection").height = 0;
+    event.preventDefault();
+
+    document.getElementById("startSection").classList.add("d-none");
+    document.getElementById("quizSection").classList.remove("d-none");
     console.log('***startButton'+startButton);
+    countdown();
     showQuestion();
 })
 
-function showQuestion() {
-    console.log('***startButton'+startButton);
+submitButton.addEventListener("click",function(event) {
+    var initialInput = document.getElementById("initial");
+    console.log('***initial'+initialInput.value+timerVal);
+    var scoreMap = [];
+    var keyVal = initialInput.value;
+    scoreMap.push({keyVal, timerVal});
     
-    document.getElementById("quizSection").style.display = 'block';
+    localStorage.setItem("scores", JSON.stringify(scoreMap));
+    document.getElementById("scoresSection").classList.remove("d-none");
+    document.getElementById("initialSection").classList.add("d-none");
+})
 
+goBackButton.addEventListener("click",function(event) {
+    console.log('****timerVal'+timerVal);
+    document.getElementById("startSection").classList.remove("d-none");
+    document.getElementById("scoresSection").classList.add("d-none");
+   // timrVal.textContent = 75;
+    window.location.reload(); 
+})
+
+viewScores.addEventListener("click",function(event) {
+    document.getElementById("scoresSection").classList.remove("d-none");
+    document.getElementById("startSection").classList.add("d-none");
+    document.getElementById("quizSection").classList.add("d-none");
+    document.getElementById("initialSection").classList.add("d-none");
+
+    let savedScores = [];
+    savedScores = JSON.parse(localStorage.getItem("scores"));
+    
+   // var size = savedScores.length;
+   // console.log('***savedScores'+savedScores[0].initial);
+})
+
+clearScoresButton.addEventListener("click",function(event) {
+  //  console.log('***initial'+initialInput+timerVal);
+   // localStorage.clear;
+    localStorage.removeItem("scores");
+})
+
+function showQuestion() {
+   // console.log('***startButton'+startButton);
     var currentQues = questions[quesIndex];
 
-    quesVar = document.createElement("h1");
+    quesVar = document.createElement("h4");
     quesVar.textContent = currentQues.title;
     document.getElementById("question").innerHTML = '';
     document.getElementById("question").appendChild(quesVar);
@@ -68,8 +129,9 @@ function showQuestion() {
 
     for(x=0;x<currentQues.options.length;x++) {    
         divVar = document.createElement("div");
+        divVar.style = "margin:5px";
         btnVar = document.createElement("button");
-      //  btnVar.className = 'btn btn-secondary';
+        btnVar.className = 'btn btn-primary';
 
         btnVar.textContent = currentQues.options[x];
         btnVar.addEventListener("click",checkAnswer);
@@ -78,19 +140,48 @@ function showQuestion() {
     }
 };
 
+
 function checkAnswer(event) {
+    console.log('***quesIndex '+quesIndex);
     if(questions[quesIndex].answer === event.target.innerText) {
-        alert('Correct');
+        document.getElementById("showAnswer").textContent = 'Correct!';
     } else {
-        alert('Wrong');
+        timerVal -= 10;
+        timrVal.textContent = timerVal; 
+        document.getElementById("showAnswer").textContent = 'Wrong Answer!';
     }
     quesIndex++;
     if(quesIndex < questions.length) {
         showQuestion();
     } else {
-        // End the game
+        //End game
+        document.getElementById("initialSection").classList.remove("d-none");
+        document.getElementById("quizSection").classList.add("d-none");
+        document.getElementById("finalTimerVal").textContent =  timerVal;  
+        endQuiz();
     }
 };
+
+function countdown() {
+   // var totalTime = 75;
+  
+    timeInterval = setInterval(function () {
+        timerVal--;
+        timrVal.textContent = timerVal; 
+        if(timerVal <= 0) {
+           clearInterval(timeInterval);  
+        }                 
+    }, 1000);
+}
+
+function endQuiz() {
+   // window.location.reload();
+
+    clearInterval(timeInterval);
+   /* quesIndex = 0;
+    document.getElementById("showAnswer").classList.add("d-none"); */
+}
+
 /*
 container.addEventListener("click", function(event) {
     var element = event.target;

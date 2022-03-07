@@ -1,4 +1,4 @@
-# Password Generator
+# Timed Code Quiz
 This is Weekly Challenge 4 to build a timed code quiz 
 
 ## Description

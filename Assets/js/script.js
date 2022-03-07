@@ -3,6 +3,7 @@ var timerVal = 75;
 var timrVal = document.getElementById("timrVal");
 timrVal.textContent = timerVal; 
 var timeInterval;
+let savedScores = JSON.parse(localStorage.getItem("scores")) || [];
 
 window.addEventListener('load', (event) => {
     document.getElementById("quizSection").classList.add("d-none");
@@ -39,31 +40,6 @@ var questions = [
     },
 ];
 
-/*
-var quesArray = [
-    "Commonly used datatypes DO NOT include",
-    "Arrays in JavaScript can be used to store"
-];
-
-var optArray1 = [
-    {val:"Strings",attr:"false"},
-    {val:"Booleans",attr:"false"},
-    {val:"Alerts",attr:"optArray2"},
-    {val:"Numbers",attr:"false"}
-];
-
-var optArray2 = [
-    {val:"Numbers and Strings",attr:"false"},
-    {val:"Other Arrays",attr:"false"},
-    {val:"Booleans",attr:"false"},
-    {val:"All of the above",attr:"true"}
-];
-
-const quesMap = new Map();
-
-quesMap.set(quesArray[0], optArray1);
-quesMap.set(quesArray[1], optArray2); */
-
 var quesIndex = 0;
 var startButton = document.querySelector("#btn");
 console.log('***startButton'+startButton);
@@ -81,20 +57,43 @@ startButton.addEventListener("click", function(event) {
 submitButton.addEventListener("click",function(event) {
     var initialInput = document.getElementById("initial");
     console.log('***initial'+initialInput.value+timerVal);
-    var scoreMap = [];
     var keyVal = initialInput.value;
-    scoreMap.push({keyVal, timerVal});
-    
-    localStorage.setItem("scores", JSON.stringify(scoreMap));
-    document.getElementById("scoresSection").classList.remove("d-none");
-    document.getElementById("initialSection").classList.add("d-none");
+    console.log('***keyVal'+keyVal);
+    if(keyVal === null || keyVal === '') {
+        window.alert('Please input an initial');
+    } else {
+        savedScores.push({keyVal, timerVal});
+        
+        localStorage.setItem("scores", JSON.stringify(savedScores));
+        document.getElementById("scoresSection").classList.remove("d-none");
+        document.getElementById("initialSection").classList.add("d-none");
+        document.getElementById("viewScores").classList.add("d-none");
+
+        savedScoresJson = JSON.parse(localStorage.getItem("scores"));
+        
+        if(savedScoresJson.length >0) {
+            var savedScoresJsonSorted = savedScoresJson.sort((a, b) => parseFloat(b.timerVal) - parseFloat(a.timerVal));
+            for(i=0;i<savedScoresJsonSorted.length;i++) {
+                var liVar = document.createElement("p");
+                liVar.class="text-justify";
+                liVar.style = "background-color:#808080";
+                liVar.textContent = savedScoresJsonSorted[i].keyVal + "-" + savedScoresJsonSorted[i].timerVal;
+                document.getElementById("scores").appendChild(liVar);
+            }
+        } else {
+            var liVar = document.createElement("p");
+            liVar.class="text-justify";
+            liVar.style = "background-color:#808080";
+            liVar.textContent = "No saved scores"
+            document.getElementById("scores").appendChild(liVar);
+        }
+    }
 })
 
 goBackButton.addEventListener("click",function(event) {
     console.log('****timerVal'+timerVal);
     document.getElementById("startSection").classList.remove("d-none");
     document.getElementById("scoresSection").classList.add("d-none");
-   // timrVal.textContent = 75;
     window.location.reload(); 
 })
 
@@ -104,21 +103,35 @@ viewScores.addEventListener("click",function(event) {
     document.getElementById("quizSection").classList.add("d-none");
     document.getElementById("initialSection").classList.add("d-none");
 
-    let savedScores = [];
-    savedScores = JSON.parse(localStorage.getItem("scores"));
-    
-   // var size = savedScores.length;
-   // console.log('***savedScores'+savedScores[0].initial);
+    document.getElementById("viewScores").classList.add("d-none");
+
+    savedScoresJson = JSON.parse(localStorage.getItem("scores"));
+
+    if(savedScoresJson != null && savedScoresJson.length >0) {
+        var savedScoresJsonSorted = savedScoresJson.sort((a, b) => parseFloat(b.timerVal) - parseFloat(a.timerVal));
+        for(i=0;i<savedScoresJsonSorted.length;i++) {
+            var liVar = document.createElement("p");
+            liVar.class="text-justify";
+            liVar.style = "background-color:#808080";
+            liVar.textContent = savedScoresJsonSorted[i].keyVal + "-" + savedScoresJsonSorted[i].timerVal;
+            document.getElementById("scores").appendChild(liVar);
+        }
+    } else {
+        var liVar = document.createElement("p");
+        liVar.class="text-justify";
+        liVar.style = "background-color:#808080";
+        liVar.textContent = "No saved scores"
+        document.getElementById("scores").appendChild(liVar);
+    }
+      
 })
 
-clearScoresButton.addEventListener("click",function(event) {
-  //  console.log('***initial'+initialInput+timerVal);
-   // localStorage.clear;
+clearScoresButton.addEventListener("click",function(event) {  
     localStorage.removeItem("scores");
+    window.location.reload();
 })
 
 function showQuestion() {
-   // console.log('***startButton'+startButton);
     var currentQues = questions[quesIndex];
 
     quesVar = document.createElement("h4");
@@ -163,120 +176,20 @@ function checkAnswer(event) {
 };
 
 function countdown() {
-   // var totalTime = 75;
   
     timeInterval = setInterval(function () {
         timerVal--;
         timrVal.textContent = timerVal; 
         if(timerVal <= 0) {
            clearInterval(timeInterval);  
+           document.getElementById("initialSection").classList.remove("d-none");
+           document.getElementById("quizSection").classList.add("d-none");
         }                 
     }, 1000);
 }
 
 function endQuiz() {
-   // window.location.reload();
-
     clearInterval(timeInterval);
-   /* quesIndex = 0;
-    document.getElementById("showAnswer").classList.add("d-none"); */
 }
 
-/*
-container.addEventListener("click", function(event) {
-    var element = event.target;
-    console.log('element: '+element);
 
-    var quesVar='';
-    var textVar='';
-    var divVar = '';
-    var btnVar = '';
-    var nodeVar = '';
-
-    if(element.matches(".btn")) {   
-        
-        
-        quesVar = document.createElement("h1");
-        textVar = document.createTextNode(quesArray[0]);
-        quesVar.appendChild(textVar);
-        document.getElementById("question").appendChild(quesVar);
-
-        for(x=0;x<=optArray1.length-1;x++) {    
-            divVar = document.createElement("div");
-            divVar.className = optArray1[x].attr;
-            btnVar = document.createElement("button");
-            btnVar.className = optArray1[x].attr;
-            nodeVar = document.createTextNode(optArray1[x].val);
-            btnVar.appendChild(nodeVar);
-            divVar.appendChild(btnVar);
-    
-            document.getElementById("options").appendChild(divVar);
-        }
-       // showOptions(quesMap.get(quesArray[0]));
-      /*  for(i=0;i<=quesArray.length-1;i++) {
-            if(i===0) {
-                const quesVar = document.createElement("h1");
-                const textVar = document.createTextNode(quesArray[i]);
-                quesVar.appendChild(textVar);
-                document.getElementById("question").appendChild(quesVar);
-                showOptions(optArray1);
-            } 
-            /*else if(i===1) {
-                const quesVar2 = document.createElement("h1");
-                const textVar2 = document.createTextNode(quesArray[i]);
-                quesVar2.appendChild(textVar2);
-                document.getElementById("question").appendChild(quesVar);
-                for(x=0;x=optArray2.length-1;x++) {
-                    const divVar = document.createElement("div");
-                    const btnVar = document.createElement("button");
-                    const nodeVar = document.createTextNode(optArray2[x]);
-                    btnVar.appendChild(nodeVar);
-                    divVar.appendChild(btnVar);
-        
-                    document.getElementById("options").appendChild(divVar);
-                }
-            } 
-        } */
-  /*  }  
-    
-    if(element.matches(".optArray2")) {
-        console.log('Clickevent');
-        var arrVal = '';
-        const quesVar = document.createElement("h1");
-        const textVar = document.createTextNode(quesArray[1]);
-        quesVar.appendChild(textVar);
-        document.getElementById("question").appendChild(quesVar); 
-        document.getElementById("question").textContent = quesArray[1];   
-       // showOptions(quesMap.get(quesArray[1]));
-
-        for(x=0;x<=optArray2.length-1;x++) {
-            arrVal = optArray1[x].attr;
-            console.log('>>>> 1 '+ document.getElementsByClassName('.optArray1[x].attr').textContent);
-            console.log('>>>> optArray2[x]: '+ optArray2[x].val);
-            console.log('>>>> optArray1[x]: '+ optArray1[x].val);
-           // btnVar.className = optArray2[x].attr;
-            document.getElementsByClassName('.optArray1[x].attr').textContent = optArray2[x].val;
-        }
-
-    }
-
-    if(element.matches(".false")) {
-        alert('Wrong Answer');
-    }
-}); */
-/*
-function showOptions(arrayName) {
-    for(x=0;x<=arrayName.length-1;x++) {
-        // console.log('i: '+i);
-        // console.log('i: '+arrayName[i]);
-
-         const divVar = document.createElement("div");
-         const btnVar = document.createElement("button");
-         btnVar.className = arrayName[x].attr;
-         const nodeVar = document.createTextNode(arrayName[x].val);
-         btnVar.appendChild(nodeVar);
-         divVar.appendChild(btnVar);
-
-         document.getElementById("options").appendChild(divVar);
-     }
-} */

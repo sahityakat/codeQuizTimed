@@ -22,7 +22,9 @@
                 </section>
             </section>
             <section class="row h-50 m-6">
-                <section id="startSection" class="startSection align-items-center mx-6">
+                <section class="tempDiv d-flex align-items-center col-2 my-6">
+                </section>
+                <section id="startSection" class="startSection align-items-center col-8 mx-6">
                     <div>
                         <h1 class="d-flex justify-content-center">Coding Quiz Challenge</h1>
                         <p class="text-center">Try to answer the following code-related questions within the time limit. 
@@ -30,7 +32,7 @@
                         <button type="button" id="btn" class="btn btn-primary p-2 w-100 text-center">Start Quiz</button>
                     </div>
                 </section>
-                <section id="quizSection" class="quizSection align-items-center mx-6 w-100">
+                <section id="quizSection" class="quizSection align-items-center col-8 mx-6 w-100">
                     <div class="text-center">
                         <div id="question"></div>
                         <div id="options" class="m-2"></div>
@@ -38,7 +40,7 @@
                         <div id="showAnswer"></div>
                     </div> 
                 </section>
-                <section id="initialSection" class="initialSection align-items-center mx-6 w-100">
+                <section id="initialSection" class="initialSection align-items-center col-8 mx-6 w-100">
                     <div class="text-center">
                         <h2 class="d-flex justify-content-center">All done!</h2>
                         <p class="text-center">Your final score is <span id="finalTimerVal"></span></p>
@@ -46,13 +48,15 @@
                         <input class="btn btn-primary" type="submit" id="submitButton" value="Submit">
                     </div> 
                 </section>
-                <section id="scoresSection" class="scoresSection align-items-center mx-6 w-100">
+                <section id="scoresSection" class="scoresSection align-items-center col-8 mx-6 w-100">
                     <div class="text-center">
                         <h2 class="d-flex justify-content-center">High Scores</h2>
                         <div id="scores" class="m-2"></div>
                         <input class="btn btn-primary" type="submit" id="goBackButton" value="Go Back">
                         <input class="btn btn-primary" type="submit" id="clearScoresButton" value="Clear High Scores">
                     </div>    
+                </section>
+                <section class="tempDiv d-flex align-items-center col-2 my-6">
                 </section>
             </section>                
         </div>

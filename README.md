@@ -41,7 +41,7 @@ THEN I can save my initials and score
 
 ## Resources
 
-[JavaScript HTML DOM EventListener](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
-[Bootstrap CSS](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
+1. [JavaScript HTML DOM EventListener](https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
+2. [Bootstrap CSS](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
 
 

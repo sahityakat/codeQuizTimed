@@ -71,7 +71,7 @@ submitButton.addEventListener("click",function(event) {
 
         savedScoresJson = JSON.parse(localStorage.getItem("scores"));
         
-        if(savedScoresJson.length >0) {
+        if(savedScoresJson != null && savedScoresJson.length >0) {
             var savedScoresJsonSorted = savedScoresJson.sort((a, b) => parseFloat(b.timerVal) - parseFloat(a.timerVal));
             for(i=0;i<savedScoresJsonSorted.length;i++) {
                 var liVar = document.createElement("p");
